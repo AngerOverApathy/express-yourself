@@ -1,21 +1,25 @@
 const fs = require('fs');
-let data = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+let data = JSON.parse(fs.readFileSync("db/db.json", "utf8"));
+const router = require('express').Router();
+const noteController = require('../../controllers/noteController')
 
-module.exports = function(app) {
+
     //save notes as json
-    app.get('/api/notes', function (req,res) {
-        res.json(data);
-        if (err) throw err;
+    router.get('/notes', function (req,res) {
+        noteController
+        .getNotes()
+        .then((notes) => res.json(notes))
+        .catch(err => res.status(500).json(err))
     })
 
-    app.get("/api/notes/:id", function(req, res) {
+    router.get("/notes/:id", function(req, res) {
 
         res.json(data[Number(req.params.id)]);
 
     });
 
     //return new note to body
-    app.post('/api/notes', function (req, res) {
+    router.post('/notes', function (req, res) {
         let newNote = req.body;
         let newId = (data.length).toString();
         console.log(newId);
@@ -29,7 +33,7 @@ module.exports = function(app) {
     res.json(data);
 })
     //delete note
-    app.delete('/api/notes/:id', function(req,res) {
+    router.delete('/notes/:id', function(req,res) {
         let noteId = req.params.id;
         let newNoteId = 0;
 
@@ -46,4 +50,4 @@ module.exports = function(app) {
         res.json(data)
     })
 
-}
+module.exports = router;
