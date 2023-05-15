@@ -51,5 +51,3 @@ To delete a note, click on the trash bin icon next to the note you want to delet
 
 ## Questions? Reach Out <a name="questions"/>
 Github: https://github.angeroverapathy.com
-<br />
-Email: angeroverapathy@gmail.com
